@@ -14,18 +14,18 @@ To get started, install package using composer:
 composer require shahvirag/laravel-ui-bootstrap
 ```
 
-Add FortifyServiceProvider to config/app.php, and do not forgot to publish fortify files.
+Publish fortify files.
 
+```bash
+php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+```
+Add FortifyServiceProvider to `config/app.php`
 ```php
 'providers' => [
     ...
     App\Providers\FortifyServiceProvider::class,
     ...
 ]
-```
-
-```bash
-php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
 ```
 
 Next, Run install artisan command to publish bootstrap scraffolding to application

@@ -4,49 +4,8 @@ namespace Shahvirag\LaravelUiBootstrap;
 
 use Illuminate\Console\Command;
 
-class InstallCommand extends Command
+abstract class InstallCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'laravelui:bootstrap
-                    {--force : Overwrite existing views by default}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Scaffold basic login and registration views and routes';
-
-    /**
-     * The views that need to be exported.
-     *
-     * @var array
-     */
-    protected $views = [
-        'auth/login.blade.php' => 'auth/login.blade.php',
-        'auth/passwords/confirm.blade.php' => 'auth/passwords/confirm.blade.php',
-        'auth/passwords/email.blade.php' => 'auth/passwords/email.blade.php',
-        'auth/passwords/reset.blade.php' => 'auth/passwords/reset.blade.php',
-        'auth/register.blade.php' => 'auth/register.blade.php',
-        'auth/verify.blade.php' => 'auth/verify.blade.php',
-        'layouts/app.blade.php' => 'layouts/app.blade.php',
-        'home.blade.php' => 'home.blade.php',
-        'profile.blade.php' => 'profile.blade.php',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $resourceFiles = [
-        'sass/_variables.scss' => 'sass/_variables.scss',
-        'sass/app.scss' => 'sass/app.scss',
-        'js/bootstrap.js' => 'js/bootstrap.js',
-        'js/app.js' => 'js/app.js',
-    ];
 
     /**
      * Create a new command instance.
@@ -56,12 +15,11 @@ class InstallCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle()
     {
@@ -159,7 +117,7 @@ class InstallCommand extends Command
 
         $packages = json_decode(file_get_contents(base_path('package.json')), true);
 
-        $bootstrapPackages =  [
+        $this->bootstrapPackages =  [
             'bootstrap' => '^4.0.0',
             'jquery' => '^3.2',
             'popper.js' => '^1.12',
@@ -169,7 +127,7 @@ class InstallCommand extends Command
 
         $packages[$configurationKey] = array_merge(
             array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
-            $bootstrapPackages
+            $this->bootstrapPackages
         );
 
         ksort($packages[$configurationKey]);
